@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "dev": "nx run-many --target=dev",
+    "start": "nx run-many --target=start",
     "lint-staged": "lint-staged",
     "build": "nx run-many --target=build",
     "build:affected": "nx affected --target=build",
