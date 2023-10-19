@@ -44,5 +44,25 @@ export class CareRequestService {
             }
         })
     }
+
+    applyToCareRequest(id: string): Promise<string> {
+        const request = this.careRequests.get(id)
+
+        return new Promise((resolve, reject) => {
+            if (request) {
+                if (request.status === 'closed') {
+                    console.log(`Care request is already closed id: ${id}`)
+                    return reject(new CustomError(404, "Care request is already closed"))
+                }
+                request.status = 'closed'
+    
+                console.log(`Modified care request with id: ${id}`)
+                resolve(id)
+            } else {
+                console.log(`Care request does not exist id: ${id}`)
+                reject(new CustomError(404, "Care request does not exist"))
+            }
+        })
+    }
 }
 

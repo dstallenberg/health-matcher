@@ -44,6 +44,12 @@
         </v-form>
       </v-card-text>
     </v-card>
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="1000"
+    >
+      {{ snackbarText }}
+    </v-snackbar>
   </template>
   
   <script lang="ts" setup>
@@ -100,16 +106,23 @@ const isLoading = ref(false)
 
 const isFormValid = ref(false)
 
+const snackbar = ref(false)
+const snackbarText = ref("")
+
 function submitRequest() {
   isLoading.value = true
 
   createCareRequest(careForm)
     .then((id) => {
       isLoading.value = false
+      snackbar.value = true
+      snackbarText.value = 'Succesfully created request'
       form.value.reset()
     })
     .catch((error) => {
       isLoading.value = false
+      snackbar.value = true
+      snackbarText.value = error
       form.value.reset()
     })
 }

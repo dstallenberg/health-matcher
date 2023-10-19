@@ -8,6 +8,9 @@ export const useAppStore = defineStore('app', {
   actions: {
     setUsertype(usertype: 'client' | 'caregiver') {
       this.usertype = usertype
+    },
+    logout() {
+      this.usertype = 'unknown'
     }
   }
 })

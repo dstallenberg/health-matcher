@@ -1,4 +1,4 @@
-import { CareRequest, CreateSuccess, Failure, NewCareRequest } from "api";
+import { CareRequest, CreateSuccess, Failure, ModifySuccess, NewCareRequest } from "api";
 import { Request, Response, Router } from "express";
 
 import { CustomError } from "../errors/CustomError";
@@ -29,6 +29,16 @@ export default function setupCareRequestRouter(service: CareRequestService) {
     
     router.post('/', (request: Request<unknown, CreateSuccess | Failure, NewCareRequest>, response: Response<CreateSuccess | Failure>) => {
         service.createCareRequest(request.body)
+            .then((id) => {
+                return response.status(200).json({id: id})
+            })
+            .catch((error) => {
+                return error instanceof CustomError ? response.status(error.status).json({ reason: error.message }) : response.status(500).json({ reason: 'server error' });
+            })
+    })
+
+    router.post('/apply', (request: Request<unknown, ModifySuccess | Failure, {id: string}>, response: Response<ModifySuccess | Failure>) => {
+        service.applyToCareRequest(request.body.id)
             .then((id) => {
                 return response.status(200).json({id: id})
             })

@@ -1,5 +1,5 @@
 // Utilities
-import { CareRequest, CreateSuccess, NewCareRequest } from 'api'
+import { CareRequest, CreateSuccess, ModifySuccess, NewCareRequest } from 'api'
 import axios from 'axios'
 import { defineStore } from 'pinia'
 
@@ -34,6 +34,15 @@ export const useCareRequestStore = defineStore('careRequest', {
             alert(error)
             console.log(error)
           }
+    },
+    async applyToCareRequest(id: string) {
+      try {
+        const data = await axios.post<ModifySuccess>('http://localhost:8080/care-request/apply', {id: id})
+        return data.data.id
+      } catch (error) {
+        alert(error)
+        console.log(error)
+      }
     }
   }
 })

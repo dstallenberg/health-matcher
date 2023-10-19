@@ -9,18 +9,6 @@
   
       <v-card-text>
         <v-list>
-            <!-- <v-list-item v-for="(value, index) in requests" :key="index">
-                <v-list-item-title>
-                 {{ value.kind }} {{ value.name }}
-                </v-list-item-title>
-                <v-list-item-subtitle>
-                  {{ (new Date(value.start)).toLocaleString() }} -> {{ (new Date(value.end)).toLocaleString() }}
-                </v-list-item-subtitle>
-                <v-divider inset/>
-                {{ value.additionalInformation }}
-                <v-divider inset/>
-            </v-list-item> -->
-
             <v-dialog width="500" v-for="(value, index) in requests" :key="index">
               <template v-slot:activator="{ props }">
                 <v-list-item v-bind="props" text="Open Dialog"> 
@@ -47,7 +35,7 @@
 
                     <v-btn
                       text="Apply"
-                      @click="isActive.value = false && apply(value.id)"
+                      @click="apply(isActive, value.id)"
                     ></v-btn>
                   </v-card-actions>
                 </v-card>
@@ -56,10 +44,16 @@
         </v-list>
       </v-card-text>
     </v-card>
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="1000"
+    >
+      {{ snackbarText }}
+    </v-snackbar>
   </template>
   
   <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import {useCareRequestStore} from '../store/careRequest'
 import { onMounted } from 'vue';
 
@@ -69,13 +63,27 @@ const requests = computed(() => {
     return store.careRequests
 })
 
+const snackbar = ref(false)
+const snackbarText = ref("")
+
+function apply(isActive, id: string) {
+  store.applyToCareRequest(id)
+  .then(() => {
+    store.fetchCareRequests()
+    snackbar.value = true
+    snackbarText.value = 'Succesfully applied to request'
+    isActive.value = false
+  })
+  .catch((error) => {
+    snackbar.value = true
+    snackbarText.value = error
+    isActive.value = false
+  })
+}
+
 onMounted(() => {
     store.fetchCareRequests()
 })
-
-function apply(id: string) {
-  // TODO
-}
 
   </script>
   
