@@ -23,6 +23,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "api": "file:../../shared/api",
     "express": "^4.18.2"
   },
   "devDependencies": {
