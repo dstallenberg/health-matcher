@@ -36,24 +36,22 @@
             type="datetime-local"
           ></v-textarea>
 
-          <v-btn type="submit" block class="mt-2">Submit</v-btn>
+          <v-btn :loading="isLoading" type="submit" block class="mt-2">Submit</v-btn>
         </v-form>
       </v-card-text>
     </v-card>
   </template>
   
   <script lang="ts" setup>
+import { NewCareRequest } from 'api';
+import {useCareRequestStore} from '../store/careRequest'
+import { computed, ref } from 'vue';
 
-  type CareRequest = {
-    kind: string,
-    start: number
-    end: number
-    name: string
-    additionalInformation: string
-  }
+const { createCareRequest } = useCareRequestStore()
 
-  const careForm: CareRequest = {
-    kind: '',
+
+  const careForm: NewCareRequest = {
+    kind: 'household',
     start: 0,
     end: 0,
     name: '',
@@ -62,8 +60,18 @@
 
   const kindOptions = ['household', 'medical']
 
+const isLoading = ref(false)
+
 function submitRequest() {
+  isLoading.value = true
   // TODO
+  createCareRequest(careForm)
+    .then((id) => {
+      isLoading.value = false
+    })
+    .catch((error) => {
+      isLoading.value = false
+    })
 }
 
   </script>

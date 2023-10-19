@@ -1,5 +1,6 @@
 <template>
   <CareRequest v-if="usertype === 'client'"/>
+  
 </template>
 
 <script lang="ts" setup>
