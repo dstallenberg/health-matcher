@@ -10,12 +10,12 @@
     <v-card-text>
       <v-row>
         <v-col>
-          <v-btn @click="() => setUsertype('client')" to="/">
+          <v-btn @click="() => setUsertype('client')">
             I am a client
           </v-btn>
         </v-col>
         <v-col>
-          <v-btn @click="() => setUsertype('caregiver')" to="/">
+          <v-btn @click="() => setUsertype('caregiver')">
             I am a caregiver
           </v-btn>
         </v-col>

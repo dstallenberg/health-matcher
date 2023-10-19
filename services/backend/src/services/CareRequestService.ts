@@ -25,10 +25,10 @@ export class CareRequestService {
         })
     }
 
-    getAllCareRequests(): Promise<CareRequest[]> {
+    getAllCareRequests(status = 'open'): Promise<CareRequest[]> {
         return new Promise((resolve) => {
             console.log(`Getting all care request`)
-            resolve([...this.careRequests.values()])
+            resolve([...this.careRequests.values()].filter((request) => request.status === status))
         })
     }
 

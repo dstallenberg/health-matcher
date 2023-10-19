@@ -1,3 +1,4 @@
+import * as bodyParser from 'body-parser'
 import * as cors from 'cors'
 import * as express from "express";
 
@@ -5,9 +6,12 @@ import setupCareRequestRouter from "./routes/careRequest";
 import { CareRequestService } from "./services/CareRequestService";
 
 const app = express();
+app.use(bodyParser());
+
 app.use(cors({
     origin:'http://localhost:3000', 
     credentials:true,            //access-control-allow-credentials:true
+    methods: ['GET', 'PUT', 'POST']
 }))
 
 app.use((request, response, next) => {
