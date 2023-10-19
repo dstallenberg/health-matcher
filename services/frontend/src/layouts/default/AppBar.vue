@@ -1,9 +1,9 @@
 <template>
   <v-app-bar flat>
     <v-app-bar-title>
-      <v-icon icon="mdi-circle-slice-6" />
+      <v-icon icon="mdi-bottle-tonic-plus-outline" />
 
-      Essentials Preset
+      Health Matcher
     </v-app-bar-title>
   </v-app-bar>
 </template>
